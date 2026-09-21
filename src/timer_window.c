@@ -68,24 +68,27 @@ static void initialise_ui(void) {
   layer_add_child(window_get_root_layer(s_window), (Layer *)s_count_layer);
   
   // s_up_label_layer
-  s_up_label_layer = text_layer_create(GRect(120, 4, 22, 28));
-  text_layer_set_text_alignment(s_up_label_layer, GTextAlignmentRight);
+  s_up_label_layer = text_layer_create(GRect(112, 4, 30, 28));
+  text_layer_set_text_alignment(s_up_label_layer, GTextAlignmentCenter);
   text_layer_set_font(s_up_label_layer, s_res_gothic_14);
-  text_layer_set_background_color(s_up_label_layer, GColorClear);
+  text_layer_set_background_color(s_up_label_layer, GColorBlack);
+  text_layer_set_text_color(s_up_label_layer, GColorWhite);
   layer_add_child(window_get_root_layer(s_window), (Layer *)s_up_label_layer);
   
   // s_select_label_layer
-  s_select_label_layer = text_layer_create(GRect(120, 84, 22, 28));
-  text_layer_set_text_alignment(s_select_label_layer, GTextAlignmentRight);
+  s_select_label_layer = text_layer_create(GRect(112, 84, 30, 28));
+  text_layer_set_text_alignment(s_select_label_layer, GTextAlignmentCenter);
   text_layer_set_font(s_select_label_layer, s_res_gothic_14);
-  text_layer_set_background_color(s_select_label_layer, GColorClear);
+  text_layer_set_background_color(s_select_label_layer, GColorBlack);
+  text_layer_set_text_color(s_select_label_layer, GColorWhite);
   layer_add_child(window_get_root_layer(s_window), (Layer *)s_select_label_layer);
   
   // s_down_label_layer
-  s_down_label_layer = text_layer_create(GRect(120, 146, 22, 28));
-  text_layer_set_text_alignment(s_down_label_layer, GTextAlignmentRight);
+  s_down_label_layer = text_layer_create(GRect(112, 146, 30, 28));
+  text_layer_set_text_alignment(s_down_label_layer, GTextAlignmentCenter);
   text_layer_set_font(s_down_label_layer, s_res_gothic_14);
-  text_layer_set_background_color(s_down_label_layer, GColorClear);
+  text_layer_set_background_color(s_down_label_layer, GColorBlack);
+  text_layer_set_text_color(s_down_label_layer, GColorWhite);
   layer_add_child(window_get_root_layer(s_window), (Layer *)s_down_label_layer);
 }
 
