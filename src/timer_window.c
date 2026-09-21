@@ -33,56 +33,56 @@ static void initialise_ui(void) {
   s_res_font_robotocondensed_bold_37 = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTOCONDENSED_BOLD_37));
   s_res_gothic_14 = fonts_get_system_font(FONT_KEY_GOTHIC_14);
   // s_clock_layer
-  s_clock_layer = text_layer_create(GRect(3, 0, 138, 34));
+  s_clock_layer = text_layer_create(GRect(3, 0, 105, 34));
   text_layer_set_text(s_clock_layer, " 00:00:00");
   text_layer_set_text_alignment(s_clock_layer, GTextAlignmentCenter);
   text_layer_set_font(s_clock_layer, s_res_gothic_28_bold);
   layer_add_child(window_get_root_layer(s_window), (Layer *)s_clock_layer);
   
   // s_start_layer
-  s_start_layer = text_layer_create(GRect(2, 129, 140, 28));
+  s_start_layer = text_layer_create(GRect(2, 129, 108, 28));
   text_layer_set_text(s_start_layer, "Start 00:00:00 AM");
   text_layer_set_text_alignment(s_start_layer, GTextAlignmentCenter);
   text_layer_set_font(s_start_layer, s_res_gothic_24_bold);
   layer_add_child(window_get_root_layer(s_window), (Layer *)s_start_layer);
   
   // s_mode_layer
-  s_mode_layer = text_layer_create(GRect(8, 101, 130, 32));
+  s_mode_layer = text_layer_create(GRect(2, 101, 108, 32));
   text_layer_set_text(s_mode_layer, " DOWN-UP");
   text_layer_set_text_alignment(s_mode_layer, GTextAlignmentCenter);
   text_layer_set_font(s_mode_layer, s_res_gothic_28_bold);
   layer_add_child(window_get_root_layer(s_window), (Layer *)s_mode_layer);
   
   // s_timer_layer
-  s_timer_layer = text_layer_create(GRect(1, 35, 142, 70));
+  s_timer_layer = text_layer_create(GRect(1, 35, 105, 70));
   text_layer_set_text(s_timer_layer, "Text layer");
   text_layer_set_text_alignment(s_timer_layer, GTextAlignmentCenter);
   text_layer_set_font(s_timer_layer, s_res_font_roboto_bold_54);
   layer_add_child(window_get_root_layer(s_window), (Layer *)s_timer_layer);
   
   // s_count_layer
-  s_count_layer = text_layer_create(GRect(2, 46, 141, 48));
+  s_count_layer = text_layer_create(GRect(2, 46, 105, 48));
   text_layer_set_text(s_count_layer, "00:00:00");
   text_layer_set_text_alignment(s_count_layer, GTextAlignmentCenter);
   text_layer_set_font(s_count_layer, s_res_font_robotocondensed_bold_37);
   layer_add_child(window_get_root_layer(s_window), (Layer *)s_count_layer);
   
   // s_up_label_layer
-  s_up_label_layer = text_layer_create(GRect(108, 6, 34, 16));
+  s_up_label_layer = text_layer_create(GRect(110, 4, 32, 28));
   text_layer_set_text_alignment(s_up_label_layer, GTextAlignmentRight);
   text_layer_set_font(s_up_label_layer, s_res_gothic_14);
   text_layer_set_background_color(s_up_label_layer, GColorClear);
   layer_add_child(window_get_root_layer(s_window), (Layer *)s_up_label_layer);
   
   // s_select_label_layer
-  s_select_label_layer = text_layer_create(GRect(108, 86, 34, 16));
+  s_select_label_layer = text_layer_create(GRect(110, 84, 32, 28));
   text_layer_set_text_alignment(s_select_label_layer, GTextAlignmentRight);
   text_layer_set_font(s_select_label_layer, s_res_gothic_14);
   text_layer_set_background_color(s_select_label_layer, GColorClear);
   layer_add_child(window_get_root_layer(s_window), (Layer *)s_select_label_layer);
   
   // s_down_label_layer
-  s_down_label_layer = text_layer_create(GRect(108, 148, 34, 16));
+  s_down_label_layer = text_layer_create(GRect(110, 146, 32, 28));
   text_layer_set_text_alignment(s_down_label_layer, GTextAlignmentRight);
   text_layer_set_font(s_down_label_layer, s_res_gothic_14);
   text_layer_set_background_color(s_down_label_layer, GColorClear);
@@ -195,26 +195,26 @@ static void display_timer() {
 
 // Update button labels based on current mode/status
 static void update_button_labels(void) {
-  // Up: \u2932=single(back to min), \u27F2=long(reset)
-  text_layer_set_text(s_up_label_layer, "\u2932\u27F2");
+  // Up: ^ = single(back to min), R = long(reset)
+  text_layer_set_text(s_up_label_layer, "^\nR");
   
-  // Select: \u25B6/\u23F8=single(start/stop), \u23F0=long(sync clock)
+  // Select: >/H = single(start/stop), ~ = long(sync clock)
   if (timer_run) {
-    text_layer_set_text(s_select_label_layer, "\u23F8\u23F0");
+    text_layer_set_text(s_select_label_layer, "H\n~");
   } else {
-    text_layer_set_text(s_select_label_layer, "\u25B6\u23F0");
+    text_layer_set_text(s_select_label_layer, ">\n~");
   }
   
-  // Down: \u2933=single(fwd to min), R/C/S=long(next mode)
+  // Down: v = single(fwd to min), R/C/S = long(next mode)
   switch (timer_mode) {
   case TIMER_STOP:
-    text_layer_set_text(s_down_label_layer, "\u2933R");
+    text_layer_set_text(s_down_label_layer, "v\nR");
     break;
   case TIMER_ROLLING:
-    text_layer_set_text(s_down_label_layer, "\u2933C");
+    text_layer_set_text(s_down_label_layer, "v\nC");
     break;
   case TIMER_COUNT:
-    text_layer_set_text(s_down_label_layer, "\u2933S");
+    text_layer_set_text(s_down_label_layer, "v\nS");
     break;
   }
 }
