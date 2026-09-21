@@ -1,4 +1,5 @@
 #include <pebble.h>
+#include <stdio.h>
 #include <limits.h>
 #include "timer_window.h"
 
@@ -8,10 +9,9 @@ static GColor MyYellow, MyOrange, MyGreen;					// set to white on Aplite
 // BEGIN AUTO-GENERATED UI CODE; DO NOT MODIFY
 static Window *s_window;
 static GFont s_res_gothic_28_bold;
-static GFont s_res_gothic_24_bold;
-static GFont s_res_font_roboto_bold_54;
-static GFont s_res_font_robotocondensed_bold_37;
+static GFont s_res_gothic_18;
 static GFont s_res_gothic_14;
+static GFont s_res_bitham_42_bold;
 static TextLayer *s_clock_layer;
 static TextLayer *s_start_layer;
 static TextLayer *s_mode_layer;
@@ -28,47 +28,46 @@ static void initialise_ui(void) {
   #endif
   
   s_res_gothic_28_bold = fonts_get_system_font(FONT_KEY_GOTHIC_28_BOLD);
-  s_res_gothic_24_bold = fonts_get_system_font(FONT_KEY_GOTHIC_24_BOLD);
-  s_res_font_roboto_bold_54 = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_BOLD_54));
-  s_res_font_robotocondensed_bold_37 = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTOCONDENSED_BOLD_37));
+  s_res_gothic_18 = fonts_get_system_font(FONT_KEY_GOTHIC_18);
   s_res_gothic_14 = fonts_get_system_font(FONT_KEY_GOTHIC_14);
+  s_res_bitham_42_bold = fonts_get_system_font(FONT_KEY_BITHAM_42_BOLD);
   // s_clock_layer
-  s_clock_layer = text_layer_create(GRect(3, 0, 120, 34));
-  text_layer_set_text(s_clock_layer, " 00:00:00");
+  s_clock_layer = text_layer_create(GRect(0, 0, 120, 20));
+  text_layer_set_text(s_clock_layer, "00:00:00");
   text_layer_set_text_alignment(s_clock_layer, GTextAlignmentCenter);
-  text_layer_set_font(s_clock_layer, s_res_gothic_28_bold);
+  text_layer_set_font(s_clock_layer, s_res_gothic_18);
   layer_add_child(window_get_root_layer(s_window), (Layer *)s_clock_layer);
   
   // s_start_layer
-  s_start_layer = text_layer_create(GRect(2, 129, 120, 28));
-  text_layer_set_text(s_start_layer, "Start 00:00:00 AM");
+  s_start_layer = text_layer_create(GRect(0, 110, 120, 32));
+  text_layer_set_text(s_start_layer, "Start\n12:00:00 AM");
   text_layer_set_text_alignment(s_start_layer, GTextAlignmentCenter);
-  text_layer_set_font(s_start_layer, s_res_gothic_24_bold);
+  text_layer_set_font(s_start_layer, s_res_gothic_14);
   layer_add_child(window_get_root_layer(s_window), (Layer *)s_start_layer);
   
   // s_mode_layer
-  s_mode_layer = text_layer_create(GRect(2, 101, 120, 32));
-  text_layer_set_text(s_mode_layer, " DOWN-UP");
+  s_mode_layer = text_layer_create(GRect(0, 84, 120, 22));
+  text_layer_set_text(s_mode_layer, "DOWN-UP");
   text_layer_set_text_alignment(s_mode_layer, GTextAlignmentCenter);
-  text_layer_set_font(s_mode_layer, s_res_gothic_28_bold);
+  text_layer_set_font(s_mode_layer, s_res_gothic_18);
   layer_add_child(window_get_root_layer(s_window), (Layer *)s_mode_layer);
   
   // s_timer_layer
-  s_timer_layer = text_layer_create(GRect(1, 35, 120, 70));
-  text_layer_set_text(s_timer_layer, "Text layer");
+  s_timer_layer = text_layer_create(GRect(0, 26, 120, 46));
+  text_layer_set_text(s_timer_layer, "5:00");
   text_layer_set_text_alignment(s_timer_layer, GTextAlignmentCenter);
-  text_layer_set_font(s_timer_layer, s_res_font_robotocondensed_bold_37);
+  text_layer_set_font(s_timer_layer, s_res_bitham_42_bold);
   layer_add_child(window_get_root_layer(s_window), (Layer *)s_timer_layer);
   
   // s_count_layer
-  s_count_layer = text_layer_create(GRect(2, 46, 120, 48));
-  text_layer_set_text(s_count_layer, "00:00:00");
+  s_count_layer = text_layer_create(GRect(0, 32, 120, 34));
+  text_layer_set_text(s_count_layer, "0:00:00");
   text_layer_set_text_alignment(s_count_layer, GTextAlignmentCenter);
-  text_layer_set_font(s_count_layer, s_res_font_robotocondensed_bold_37);
+  text_layer_set_font(s_count_layer, s_res_gothic_28_bold);
   layer_add_child(window_get_root_layer(s_window), (Layer *)s_count_layer);
   
   // s_up_label_layer
-  s_up_label_layer = text_layer_create(GRect(112, 4, 30, 28));
+  s_up_label_layer = text_layer_create(GRect(122, 22, 20, 32));
   text_layer_set_text_alignment(s_up_label_layer, GTextAlignmentCenter);
   text_layer_set_font(s_up_label_layer, s_res_gothic_14);
   text_layer_set_background_color(s_up_label_layer, GColorBlack);
@@ -76,7 +75,7 @@ static void initialise_ui(void) {
   layer_add_child(window_get_root_layer(s_window), (Layer *)s_up_label_layer);
   
   // s_select_label_layer
-  s_select_label_layer = text_layer_create(GRect(112, 84, 30, 28));
+  s_select_label_layer = text_layer_create(GRect(122, 74, 20, 32));
   text_layer_set_text_alignment(s_select_label_layer, GTextAlignmentCenter);
   text_layer_set_font(s_select_label_layer, s_res_gothic_14);
   text_layer_set_background_color(s_select_label_layer, GColorBlack);
@@ -84,7 +83,7 @@ static void initialise_ui(void) {
   layer_add_child(window_get_root_layer(s_window), (Layer *)s_select_label_layer);
   
   // s_down_label_layer
-  s_down_label_layer = text_layer_create(GRect(112, 146, 30, 28));
+  s_down_label_layer = text_layer_create(GRect(122, 126, 20, 32));
   text_layer_set_text_alignment(s_down_label_layer, GTextAlignmentCenter);
   text_layer_set_font(s_down_label_layer, s_res_gothic_14);
   text_layer_set_background_color(s_down_label_layer, GColorBlack);
@@ -102,8 +101,6 @@ static void destroy_ui(void) {
   text_layer_destroy(s_up_label_layer);
   text_layer_destroy(s_select_label_layer);
   text_layer_destroy(s_down_label_layer);
-  fonts_unload_custom_font(s_res_font_roboto_bold_54);
-  fonts_unload_custom_font(s_res_font_robotocondensed_bold_37);
 }
 // END AUTO-GENERATED UI CODE
 
@@ -137,12 +134,12 @@ static void set_start_time(time_t value) {
   // Display start time
 	if (start_time) {
 	  // Create a long-lived buffer
-  	static char start_buffer[] = "Start 00:00:00 AM";
+  	static char start_buffer[] = "Start\n12:00:00 AM";
 		struct tm *start_time_tm = localtime(&start_time);
 		if(clock_is_24h_style()) {				// 24 hour format
-			strftime(start_buffer, sizeof("Start 00:00:00"), "Start %H:%M:%S", start_time_tm);
+			strftime(start_buffer + 6, sizeof(start_buffer) - 6, "%H:%M:%S", start_time_tm);
 		} else {													// 12 hour format
-			strftime(start_buffer, sizeof("Start 00:00:00 AM"), "Start %l:%M:%S %p", start_time_tm);
+			strftime(start_buffer + 6, sizeof(start_buffer) - 6, "%l:%M:%S %p", start_time_tm);
 		}
 	  text_layer_set_text(s_start_layer, start_buffer);
 	} else {
@@ -153,25 +150,23 @@ static void set_start_time(time_t value) {
 // Display timer value
 static void display_timer() {
   // Create a long-lived buffer
-  static char timer_buffer[] = "00:00:00";
-	struct tm timer_time;
-  
+  static char timer_buffer[16];
 	// set timer text & background color
 	if (timer_value > 0) {													// timer counting up
-		timer_time.tm_hour = timer_value / 3660;
-		timer_value %= 3600;
-		timer_time.tm_min = timer_value / 60;
-		timer_time.tm_sec = timer_value % 60;
-		strftime(timer_buffer, sizeof("00:00:00"), "%k:%M:%S", &timer_time);
+		int total = timer_value;
+		int hr = total / 3600;
+		int mn = (total / 60) % 60;
+		int sc = total % 60;
+		snprintf(timer_buffer, sizeof(timer_buffer), "%d:%02d:%02d", hr, mn, sc);
 	  text_layer_set_text(s_count_layer, timer_buffer);		// timer text
 		text_layer_set_background_color(s_count_layer, timer_run ? MyGreen : GColorWhite);
 		layer_set_hidden((Layer*)s_count_layer, false);
 		layer_set_hidden((Layer*)s_timer_layer, true);
 	} else {																				// timer counting down
-		// use hour:min so leading 0 is suppressed
-		timer_time.tm_hour = -timer_value / 60;
-		timer_time.tm_min = -timer_value % 60;
-		strftime(timer_buffer, sizeof("00:00"), "%k:%M", &timer_time);
+		int total = -timer_value / 60;
+		int hr = total / 60;
+		int mn = total % 60;
+		snprintf(timer_buffer, sizeof(timer_buffer), "%d:%02d", hr, mn);
 	  text_layer_set_text(s_timer_layer, timer_buffer);	// timer text
 		if (timer_run) {
 			if (timer_value < (-1 * 60)) {
@@ -201,9 +196,9 @@ static void update_button_labels(void) {
   // Up: ^ = single(back to min), R = long(reset)
   text_layer_set_text(s_up_label_layer, "^\nR");
   
-  // Select: >/H = single(start/stop), ~ = long(sync clock)
+  // Select: >/= = single(start/stop), ~ = long(sync clock)
   if (timer_run) {
-    text_layer_set_text(s_select_label_layer, "H\n~");
+    text_layer_set_text(s_select_label_layer, "=\n~");
   } else {
     text_layer_set_text(s_select_label_layer, ">\n~");
   }
