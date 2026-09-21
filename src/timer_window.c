@@ -11,6 +11,7 @@ static GFont s_res_gothic_28_bold;
 static GFont s_res_gothic_24_bold;
 static GFont s_res_font_roboto_bold_54;
 static GFont s_res_font_robotocondensed_bold_37;
+static GFont s_res_gothic_14;
 static TextLayer *s_clock_layer;
 static TextLayer *s_start_layer;
 static TextLayer *s_mode_layer;
@@ -116,6 +117,8 @@ static bool timer_run = false;      	// TRUE if timer is running
 static bool timer_sync = false;				// TRUE to sync timer to nearest clock minute
 // what timer does when zero is reached
 static enum TIMER_MODE {TIMER_STOP, TIMER_ROLLING, TIMER_COUNT} timer_mode = TIMER_COUNT;
+
+static void update_button_labels(void);
 
 // Set start time (memory and persistent)
 static void set_start_time(time_t value) {
@@ -284,7 +287,8 @@ static void update_clock_timer() {
 		default:
 			if (timer_value != timer_initial + 60) {	// if one minute elapsed from initial_time
 				break;
-			}																					// then fall through into short vibe
+			}
+			__attribute__((fallthrough));																					// then fall through into short vibe
 		case -10: case -9: case -8: case -7: case -6: case -5: case -4: case -3: case -2: case -1: 
 			APP_LOG(APP_LOG_LEVEL_DEBUG, "Short Vibe");
 			vibes_short_pulse();
@@ -397,6 +401,7 @@ static void down_long_click_handler(ClickRecognizerRef recognizer, void *context
 		break;
 	default:
 	  APP_LOG(APP_LOG_LEVEL_DEBUG, "Timer Mode error");
+	  __attribute__((fallthrough));
 	case TIMER_STOP:
 		timer_mode = TIMER_ROLLING;
 		break;
@@ -451,8 +456,10 @@ static void handle_window_unload(Window* window) {
 void show_timer_window(void) {
   initialise_ui();
 #ifdef PBL_PLATFORM_APLITE
+#ifndef PBL_SDK_3
 	window_set_fullscreen(s_window, true);									// full screen on SDK 2
 	APP_LOG(APP_LOG_LEVEL_DEBUG, "Set to fullscreen");
+#endif
 #endif
 	window_set_window_handlers(s_window, (WindowHandlers) {
     .unload = handle_window_unload,

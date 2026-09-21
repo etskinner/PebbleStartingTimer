@@ -4,7 +4,7 @@
         ""
     ],
     "companyName": "John Navas",
-    "longName": "Start Timer Sail Racing",
+    "longName": "Sail Timer+",
     "projectType": "native",
     "resources": {
         "media": [
@@ -29,13 +29,13 @@
         ]
     },
     "sdkVersion": "3",
-    "shortName": "Start Timer",
+    "shortName": "Sail Timer+",
     "targetPlatforms": [
         "aplite",
         "basalt"
     ],
-    "uuid": "45b5631f-f23f-4462-b5e3-dd61664a3a06",
-    "versionLabel": "1.4",
+    "uuid": "d8ab7309-f744-4635-b5df-4202ae027af4",
+    "versionLabel": "2.0",
     "watchapp": {
         "watchface": false
     }
