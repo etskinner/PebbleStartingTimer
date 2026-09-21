@@ -57,7 +57,7 @@ static void initialise_ui(void) {
   s_timer_layer = text_layer_create(GRect(1, 35, 120, 70));
   text_layer_set_text(s_timer_layer, "Text layer");
   text_layer_set_text_alignment(s_timer_layer, GTextAlignmentCenter);
-  text_layer_set_font(s_timer_layer, s_res_font_roboto_bold_54);
+  text_layer_set_font(s_timer_layer, s_res_font_robotocondensed_bold_37);
   layer_add_child(window_get_root_layer(s_window), (Layer *)s_timer_layer);
   
   // s_count_layer
