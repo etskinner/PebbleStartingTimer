@@ -33,56 +33,56 @@ static void initialise_ui(void) {
   s_res_font_robotocondensed_bold_37 = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTOCONDENSED_BOLD_37));
   s_res_gothic_14 = fonts_get_system_font(FONT_KEY_GOTHIC_14);
   // s_clock_layer
-  s_clock_layer = text_layer_create(GRect(3, 0, 105, 34));
+  s_clock_layer = text_layer_create(GRect(3, 0, 120, 34));
   text_layer_set_text(s_clock_layer, " 00:00:00");
   text_layer_set_text_alignment(s_clock_layer, GTextAlignmentCenter);
   text_layer_set_font(s_clock_layer, s_res_gothic_28_bold);
   layer_add_child(window_get_root_layer(s_window), (Layer *)s_clock_layer);
   
   // s_start_layer
-  s_start_layer = text_layer_create(GRect(2, 129, 108, 28));
+  s_start_layer = text_layer_create(GRect(2, 129, 120, 28));
   text_layer_set_text(s_start_layer, "Start 00:00:00 AM");
   text_layer_set_text_alignment(s_start_layer, GTextAlignmentCenter);
   text_layer_set_font(s_start_layer, s_res_gothic_24_bold);
   layer_add_child(window_get_root_layer(s_window), (Layer *)s_start_layer);
   
   // s_mode_layer
-  s_mode_layer = text_layer_create(GRect(2, 101, 108, 32));
+  s_mode_layer = text_layer_create(GRect(2, 101, 120, 32));
   text_layer_set_text(s_mode_layer, " DOWN-UP");
   text_layer_set_text_alignment(s_mode_layer, GTextAlignmentCenter);
   text_layer_set_font(s_mode_layer, s_res_gothic_28_bold);
   layer_add_child(window_get_root_layer(s_window), (Layer *)s_mode_layer);
   
   // s_timer_layer
-  s_timer_layer = text_layer_create(GRect(1, 35, 105, 70));
+  s_timer_layer = text_layer_create(GRect(1, 35, 120, 70));
   text_layer_set_text(s_timer_layer, "Text layer");
   text_layer_set_text_alignment(s_timer_layer, GTextAlignmentCenter);
   text_layer_set_font(s_timer_layer, s_res_font_roboto_bold_54);
   layer_add_child(window_get_root_layer(s_window), (Layer *)s_timer_layer);
   
   // s_count_layer
-  s_count_layer = text_layer_create(GRect(2, 46, 105, 48));
+  s_count_layer = text_layer_create(GRect(2, 46, 120, 48));
   text_layer_set_text(s_count_layer, "00:00:00");
   text_layer_set_text_alignment(s_count_layer, GTextAlignmentCenter);
   text_layer_set_font(s_count_layer, s_res_font_robotocondensed_bold_37);
   layer_add_child(window_get_root_layer(s_window), (Layer *)s_count_layer);
   
   // s_up_label_layer
-  s_up_label_layer = text_layer_create(GRect(110, 4, 32, 28));
+  s_up_label_layer = text_layer_create(GRect(120, 4, 22, 28));
   text_layer_set_text_alignment(s_up_label_layer, GTextAlignmentRight);
   text_layer_set_font(s_up_label_layer, s_res_gothic_14);
   text_layer_set_background_color(s_up_label_layer, GColorClear);
   layer_add_child(window_get_root_layer(s_window), (Layer *)s_up_label_layer);
   
   // s_select_label_layer
-  s_select_label_layer = text_layer_create(GRect(110, 84, 32, 28));
+  s_select_label_layer = text_layer_create(GRect(120, 84, 22, 28));
   text_layer_set_text_alignment(s_select_label_layer, GTextAlignmentRight);
   text_layer_set_font(s_select_label_layer, s_res_gothic_14);
   text_layer_set_background_color(s_select_label_layer, GColorClear);
   layer_add_child(window_get_root_layer(s_window), (Layer *)s_select_label_layer);
   
   // s_down_label_layer
-  s_down_label_layer = text_layer_create(GRect(110, 146, 32, 28));
+  s_down_label_layer = text_layer_create(GRect(120, 146, 22, 28));
   text_layer_set_text_alignment(s_down_label_layer, GTextAlignmentRight);
   text_layer_set_font(s_down_label_layer, s_res_gothic_14);
   text_layer_set_background_color(s_down_label_layer, GColorClear);
