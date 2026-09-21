@@ -16,6 +16,9 @@ static TextLayer *s_start_layer;
 static TextLayer *s_mode_layer;
 static TextLayer *s_timer_layer;
 static TextLayer *s_count_layer;
+static TextLayer *s_up_label_layer;
+static TextLayer *s_select_label_layer;
+static TextLayer *s_down_label_layer;
 
 static void initialise_ui(void) {
   s_window = window_create();
@@ -27,6 +30,7 @@ static void initialise_ui(void) {
   s_res_gothic_24_bold = fonts_get_system_font(FONT_KEY_GOTHIC_24_BOLD);
   s_res_font_roboto_bold_54 = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTO_BOLD_54));
   s_res_font_robotocondensed_bold_37 = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ROBOTOCONDENSED_BOLD_37));
+  s_res_gothic_14 = fonts_get_system_font(FONT_KEY_GOTHIC_14);
   // s_clock_layer
   s_clock_layer = text_layer_create(GRect(3, 0, 138, 34));
   text_layer_set_text(s_clock_layer, " 00:00:00");
@@ -61,6 +65,27 @@ static void initialise_ui(void) {
   text_layer_set_text_alignment(s_count_layer, GTextAlignmentCenter);
   text_layer_set_font(s_count_layer, s_res_font_robotocondensed_bold_37);
   layer_add_child(window_get_root_layer(s_window), (Layer *)s_count_layer);
+  
+  // s_up_label_layer
+  s_up_label_layer = text_layer_create(GRect(108, 6, 34, 16));
+  text_layer_set_text_alignment(s_up_label_layer, GTextAlignmentRight);
+  text_layer_set_font(s_up_label_layer, s_res_gothic_14);
+  text_layer_set_background_color(s_up_label_layer, GColorClear);
+  layer_add_child(window_get_root_layer(s_window), (Layer *)s_up_label_layer);
+  
+  // s_select_label_layer
+  s_select_label_layer = text_layer_create(GRect(108, 86, 34, 16));
+  text_layer_set_text_alignment(s_select_label_layer, GTextAlignmentRight);
+  text_layer_set_font(s_select_label_layer, s_res_gothic_14);
+  text_layer_set_background_color(s_select_label_layer, GColorClear);
+  layer_add_child(window_get_root_layer(s_window), (Layer *)s_select_label_layer);
+  
+  // s_down_label_layer
+  s_down_label_layer = text_layer_create(GRect(108, 148, 34, 16));
+  text_layer_set_text_alignment(s_down_label_layer, GTextAlignmentRight);
+  text_layer_set_font(s_down_label_layer, s_res_gothic_14);
+  text_layer_set_background_color(s_down_label_layer, GColorClear);
+  layer_add_child(window_get_root_layer(s_window), (Layer *)s_down_label_layer);
 }
 
 static void destroy_ui(void) {
@@ -70,6 +95,9 @@ static void destroy_ui(void) {
   text_layer_destroy(s_mode_layer);
   text_layer_destroy(s_timer_layer);
   text_layer_destroy(s_count_layer);
+  text_layer_destroy(s_up_label_layer);
+  text_layer_destroy(s_select_label_layer);
+  text_layer_destroy(s_down_label_layer);
   fonts_unload_custom_font(s_res_font_roboto_bold_54);
   fonts_unload_custom_font(s_res_font_robotocondensed_bold_37);
 }
@@ -159,6 +187,33 @@ static void display_timer() {
 		layer_set_hidden((Layer*)s_count_layer, true);
 		layer_set_hidden((Layer*)s_timer_layer, false);
 	}
+  update_button_labels();
+}
+
+// Update button labels based on current mode/status
+static void update_button_labels(void) {
+  // Up: \u2932=single(back to min), \u27F2=long(reset)
+  text_layer_set_text(s_up_label_layer, "\u2932\u27F2");
+  
+  // Select: \u25B6/\u23F8=single(start/stop), \u23F0=long(sync clock)
+  if (timer_run) {
+    text_layer_set_text(s_select_label_layer, "\u23F8\u23F0");
+  } else {
+    text_layer_set_text(s_select_label_layer, "\u25B6\u23F0");
+  }
+  
+  // Down: \u2933=single(fwd to min), R/C/S=long(next mode)
+  switch (timer_mode) {
+  case TIMER_STOP:
+    text_layer_set_text(s_down_label_layer, "\u2933R");
+    break;
+  case TIMER_ROLLING:
+    text_layer_set_text(s_down_label_layer, "\u2933C");
+    break;
+  case TIMER_COUNT:
+    text_layer_set_text(s_down_label_layer, "\u2933S");
+    break;
+  }
 }
 
 // Display timer mode
@@ -174,6 +229,7 @@ static void display_mode() {
 		text_layer_set_text(s_mode_layer, "DOWN-UP");
 		break;
 	}
+  update_button_labels();
 }
 
 static void update_clock_timer() {
@@ -441,6 +497,7 @@ void show_timer_window(void) {
 		timer_value = timer_initial;
 		display_timer();
 	}
+  update_button_labels();
 	// app running, so cancel any pending wakeups
 	wakeup_cancel_all();
 }
